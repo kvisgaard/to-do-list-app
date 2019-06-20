@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>To Do List</title>
+  </head>
+  <body>
+    <h1>To Do list</h1>
+    <ul>
+
+    </ul>
+
+    <script>
+      const electron = require('electron');
+      const {ipcRenderer} = electron;
+      const ul = document.querySelector('ul');
+
+      ipcRenderer.on('item:add', function(e, item){
+        const li = document.createElement('li');
+        const itemText = document.createTextNode('item');
+        li.appendChild(itemText);
+        ul.appendChild(li);
+      });
+
+      ipcRenderer.on('item:clear', function(){
+        ul.innerHTML = '';
+      });
+
+      ul.addEventListener('click', removeItem);
+
+      function removeItem(e){
+        e.target.remove();
+      }
+
+    </script>
+  </body>
+</html>
